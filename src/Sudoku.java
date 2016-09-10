@@ -103,14 +103,14 @@ public class Sudoku
 	}
 
 	//Uses a stack to brute force until it finds a valid Sudoku solution.
-	public int bruteForce()
+	public int backtrack()
 	{
 		Stack<Integer> stack = new Stack<>();
 		int size = 0, loopCount = 0;
 		boolean backwards = false;
 
 		first:
-		while(size < 81)
+		while (size < 81)
 		{
 			loopCount++;
 			int row = size / 9;
@@ -133,21 +133,19 @@ public class Sudoku
 						grid = null;
 						break first;
 					}
-				}
-				else
+				} else
 				{
 					size++;
 					stack.push(val);
 				}
-			}
-			else
+			} else
 			{
 				while (val < 9)
 				{
 					backwards = false;
 					grid[row][column].setValue(++val);
 					stack.push(val);
-					if (checkHorizontal(row,column) && checkVertical(row,column) && checkSquare(row,column))
+					if (checkHorizontal(row, column) && checkVertical(row, column) && checkSquare(row, column))
 					{
 						size++;
 						break second;
