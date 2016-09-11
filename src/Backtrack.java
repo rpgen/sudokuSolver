@@ -22,7 +22,7 @@ public class Backtrack
 			loopCount++;
 			int row = size / 9;
 			int column = size % 9;
-			Sudoku.Cell current = sud.grid[row][column];
+			Cell current = sud.grid[row][column];
 			int val = current.getValue();
 			boolean perm = current.getPerm();
 			//stack.push(current.getValue());
