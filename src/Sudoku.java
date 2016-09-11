@@ -7,46 +7,6 @@ public class Sudoku
 	Cell[][] grid = new Cell[9][9];
 	int blankCount = 0;
 
-	class Cell
-	{
-		int value;
-		boolean perm;
-
-		Cell()
-		{
-			value = 0;
-			perm = false;
-		}
-		Cell(int v, boolean p)
-		{
-			value = v;
-			perm = p;
-		}
-
-		Cell(Cell c)
-		{
-			this.value = c.value;
-			this.perm = c.perm;
-		}
-
-		int getValue()
-		{
-			return value;
-		}
-		void setValue(int num)
-		{
-			value = num;
-		}
-		boolean getPerm()
-		{
-			return perm;
-		}
-		void setPerm(boolean p)
-		{
-			perm = p;
-		}
-	}
-
 	public Sudoku()
 	{
 		for (int i = 0; i < 9; i++)
@@ -63,9 +23,9 @@ public class Sudoku
 		initializeGrid(fileName);
 	}
 
-	public Sudoku(Sudoku sCopy)
+	public Sudoku(Sudoku sudokuCopy)
 	{
-		this.grid = sCopy.grid;
+		this.grid = sudokuCopy.grid;
 	}
 
 	private void initializeGrid(String fileName)
