@@ -23,6 +23,12 @@ public class Sudoku
 			perm = p;
 		}
 
+		Cell(Cell c)
+		{
+			this.value = c.value;
+			this.perm = c.perm;
+		}
+
 		int getValue()
 		{
 			return value;
@@ -55,6 +61,11 @@ public class Sudoku
 	public Sudoku(String fileName)
 	{
 		initializeGrid(fileName);
+	}
+
+	public Sudoku(Sudoku sCopy)
+	{
+		this.grid = sCopy.grid;
 	}
 
 	private void initializeGrid(String fileName)
@@ -100,5 +111,10 @@ public class Sudoku
 		{
 			System.out.println("No possible solution");
 		}
+	}
+
+	public void betterPrint()
+	{
+
 	}
 }

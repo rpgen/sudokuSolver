@@ -2,13 +2,14 @@ import java.util.*;
 
 public class Backtrack
 {
-	private Sudoku.Cell[][] grid;
+	Sudoku sud;
 
 	public Backtrack(Sudoku s)
 	{
-		grid = s.grid;
+		sud = new Sudoku(s);
 	}
 
+	//Main backtrack method
 	public int doBacktrack()
 	{
 		Stack<Integer> stack = new Stack<>();
@@ -21,7 +22,7 @@ public class Backtrack
 			loopCount++;
 			int row = size / 9;
 			int column = size % 9;
-			Sudoku.Cell current = grid[row][column];
+			Sudoku.Cell current = sud.grid[row][column];
 			int val = current.getValue();
 			boolean perm = current.getPerm();
 			//stack.push(current.getValue());
@@ -36,7 +37,7 @@ public class Backtrack
 					if (stack.empty())
 					{
 						//System.out.println("No possible solution!");
-						grid = null;
+						sud.grid = null;
 						break first;
 					}
 				} else
@@ -49,7 +50,7 @@ public class Backtrack
 				while (val < 9)
 				{
 					backwards = false;
-					grid[row][column].setValue(++val);
+					sud.grid[row][column].setValue(++val);
 					stack.push(val);
 					if (checkHorizontal(row, column) && checkVertical(row, column) && checkSquare(row, column))
 					{
@@ -58,13 +59,13 @@ public class Backtrack
 					}
 					stack.pop();
 				}
-				grid[row][column].setValue(0);
+				sud.grid[row][column].setValue(0);
 				size--;
 				stack.pop();
 				if (stack.empty())
 				{
 					//System.out.println("No possible solution!");
-					grid = null;
+					sud.grid = null;
 					break;
 				}
 				backwards = true;
@@ -82,7 +83,7 @@ public class Backtrack
 		{
 			while (column <= 8)
 			{
-				if (!grid[row][column].getPerm())
+				if (!sud.grid[row][column].getPerm())
 				{
 					return new int[]{row,column};
 				}
@@ -102,7 +103,7 @@ public class Backtrack
 		{
 			while (column >= 0)
 			{
-				if (!grid[row][column].getPerm())
+				if (!sud.grid[row][column].getPerm())
 				{
 					return new int[]{row,column};
 				}
@@ -119,7 +120,7 @@ public class Backtrack
 		Arrays.fill(exists, false);
 		for (int i = 0; i < 9; i++)
 		{
-			int num = grid[row][i].getValue();
+			int num = sud.grid[row][i].getValue();
 			if (i != 0)
 			{
 				if (exists[num-1])
@@ -136,12 +137,13 @@ public class Backtrack
 	}
 
 	//Returns false if duplicate numbers on same horizonal line / true if no duplicates
+	//Instead of checking all values for duplicates, it compares one value against all others
 	private boolean checkHorizontal(int row, int column)
 	{
-		int num = grid[row][column].getValue();
+		int num = sud.grid[row][column].getValue();
 		for (int i = 0; i < 9; i++)
 		{
-			if (i != column && grid[row][i].getValue() == num)
+			if (i != column && sud.grid[row][i].getValue() == num)
 			{
 				return false;
 			}
@@ -152,10 +154,10 @@ public class Backtrack
 	//Returns false if duplicate numbers on same vertical line / true if no duplicates
 	private boolean checkVertical(int row, int column)
 	{
-		int num = grid[row][column].getValue();
+		int num = sud.grid[row][column].getValue();
 		for (int i = 0; i < 9; i++)
 		{
-			if (i != row && grid[i][column].getValue() == num)
+			if (i != row && sud.grid[i][column].getValue() == num)
 			{
 				return false;
 			}
@@ -165,7 +167,7 @@ public class Backtrack
 
 	private boolean checkSquare(int row, int column)
 	{
-		int num = grid[row][column].getValue();
+		int num = sud.grid[row][column].getValue();
 		int x = column / 3;	//Horizontal 3x3 square
 		int y = row / 3;	//Vertical 3x3 square
 
@@ -175,7 +177,7 @@ public class Backtrack
 			{
 				if (i != row || j != column)	//If not current cell
 				{
-					if (grid[i][j].getValue() == num)
+					if (sud.grid[i][j].getValue() == num)
 					{
 						return false;
 					}
